@@ -19,7 +19,7 @@ WinPlay<Type>::WinPlay(uint32 nbuffer_points, uint32 channel, uint32 sample_rate
 template <class Type>
 WinPlay<Type>::~WinPlay()
 {	
-	state_ = STOP;  // this is important, or the waveInReset will block
+	state_ = CLOSE;  // this is important, or the waveInReset will block
 	if (device_state_.wave_in_open_ok) {
 		waveInReset(h_wave_in_);
 	}
@@ -142,7 +142,7 @@ void CALLBACK WinPlay<Type>::WaveInProc(HWAVEIN hwi,
 	uint32 output_buffer_size = this_obj->wave_out_buffer_num_;
 	process_func_type &ProcessFunc = this_obj->process_func_;
 
-	if (WIM_DATA == uMsg && PLAYING == this_obj->state_)  
+	if (WIM_DATA == uMsg && (PLAYING == this_obj->state_ || STOP == this_obj->state_))  
 	{
 		// 这里实现了 PING-PONG BUFFER
 		// PING-PONG BUFFER 处理流程
@@ -170,8 +170,8 @@ void CALLBACK WinPlay<Type>::WaveInProc(HWAVEIN hwi,
 		w %= output_buffer_size;
 
 		// 3.准备录音缓冲，加入到录音缓冲队列中
-		waveInUnprepareHeader(hwi, pwh, sizeof(WAVEHDR));
-		waveInPrepareHeader(hwi, pwh, sizeof(WAVEHDR)); 
+		//waveInUnprepareHeader(hwi, pwh, sizeof(WAVEHDR));
+		//waveInPrepareHeader(hwi, pwh, sizeof(WAVEHDR)); 
 		waveInAddBuffer(hwi, pwh, sizeof(WAVEHDR));  
 	}  
 }
