@@ -60,7 +60,7 @@ private:
 						     DWORD_PTR dwParam2); 
 
 private:
-	enum { PLAYING, STOP } state_;
+	enum { PLAYING, STOP, CLOSE } state_;
 	const uint32 sample_rate_; 
 	const uint32 sample_bits_;
 	const uint32 channel_;
