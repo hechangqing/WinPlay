@@ -1,5 +1,7 @@
 # WinPlay
 Windows 实时音频处理模板类
+
+ 使用时请在工程中包含WinPlay.h和WinPlayInl.h这两个文件，并链接winmm库。
  
  音频数据类型 PCM Waveform-Audio Data Format （MSDN ms-help://MS.VSCC.v90/MS.MSDNQTR.v90.chs/multimed/htm/_win32_devices_and_data_types.htm）
  
